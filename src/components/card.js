@@ -1,4 +1,4 @@
-const Card = (article) => {
+
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -16,10 +16,41 @@ const Card = (article) => {
   //     <span>By { authorName }</span>
   //   </div>
   // </div>
+
+import axios from "axios";
+
   //
+const Card = (article) => {
+  const cardDiv = document.createElement('div');
+  const headlineDiv = document.createElement('div');
+  const authorDiv = document.createElement('div');
+  const imgDiv = document.createElement('div');
+  const authorPic = document.createElement('img');
+  const nameSpan = document.createElement('span');
+
+  cardDiv.classList.add('card');
+  headlineDiv.classList.add('headline');
+  authorDiv.classList.add('author');
+  imgDiv.classList.add('img-container');
+
+  headlineDiv.textContent = article.headline;
+  authorPic.setAttribute('src', article.authorPhoto);
+  nameSpan.textContent = `By ${article.authorName}`;
+
+  cardDiv.appendChild(headlineDiv);
+  cardDiv.appendChild(authorDiv);
+  authorDiv.appendChild(imgDiv);
+  authorDiv.appendChild(nameSpan);
+  imgDiv.appendChild(authorPic);
+
+  cardDiv.addEventListener('click', (event) => {
+    console.log(article.headline);
+  })
+
+  return cardDiv;
 }
 
-const cardAppender = (selector) => {
+
   // TASK 6
   // ---------------------
   // Implement this function that takes a css selector as its only argument.
@@ -28,6 +59,28 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+
+const cardAppender = (selector) => {
+  let parent = document.querySelector(selector);
+
+  axios.get('http://localhost:5000/api/articles')
+     .then(res => {
+       let theArticles = res.data.articles.bootstrap.concat(res.data.articles.javascript, res.data.articles.jquery, res.data.articles.node, res.data.articles.technology);
+       theArticles.forEach((item) => {
+         parent.appendChild(Card(item));
+       })
+     })
+     .catch(err => {
+       console.error('Uh-Oh! Something went wrong!');
+     })
 }
+
+axios.get('http://localhost:5000/api/articles')
+     .then(res => {
+       console.log(res);
+     })
+     .catch(err => {
+       console.error();
+     })
 
 export { Card, cardAppender }
