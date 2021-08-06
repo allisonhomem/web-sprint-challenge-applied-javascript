@@ -43,7 +43,7 @@
 
 const headerAppender = (selector) => {
   let parent = document.querySelector(selector);
-  const myHeader = Header('Narnian Chronicle', 'May 20, 2017', '85 degrees F');
+  const myHeader = Header('Lamdba Chronicle', 'August 6th, 2021', '85 degrees F');
 
   return parent.appendChild(myHeader);
 }
