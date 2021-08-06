@@ -71,7 +71,7 @@ const cardAppender = (selector) => {
        })
      })
      .catch(err => {
-       console.error('Something went wrong');
+       console.error('Uh-Oh! Something went wrong!');
      })
 }
 
